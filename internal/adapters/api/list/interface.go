@@ -6,7 +6,9 @@ import (
 )
 
 type Service interface {
-	GetByUUID(ctx context.Context, uuid string) *list.List
-	GetAll(ctx context.Context, limit, offset int) []*list.List
-	Create(ctx context.Context, dto *list.CreateList) *list.List
+	GetListByUUID(ctx context.Context, uuid string) *list.List
+	GetLimOffList(ctx context.Context, limit, offset int) []*list.List
+	CreateLists(ctx context.Context, dto *list.CreateList) *list.List
+	UpdateList(ctx context.Context, uuid string) *list.List
+	DeleteList(ctx context.Context, uuid string) error
 }
