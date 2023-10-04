@@ -14,13 +14,13 @@ func (ls *listStorage) GetOneList(uuid string) *list.List {
 }
 
 func (ls *listStorage) GetLimOffList(limit, offset int) []*list.List {
-	return nil
+
 }
 
 func (ls *listStorage) CreateList(list *list.List) *list.List {
 	return nil
 }
 
-func (ls *listStorage) DeleteList(list *list.List) error {
+func (ls *listStorage) DeleteList(uuid string) error {
 	return nil
 }
