@@ -5,5 +5,5 @@ type Storage interface {
 	GetLimOffList(limit, offset int) []*List
 	CreateLists(list *CreateList) *List
 	UpdateList(uuid string) *List
-	DeleteList(list *List) error
+	DeleteList(uuid string) error
 }
