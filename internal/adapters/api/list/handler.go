@@ -14,6 +14,6 @@ func NewHandler(service Service) api.Handler {
 }
 
 func (h *handler) Register(rout *gin.Engine) {
-	rout.GET("/list/get/all", h.listService.GetListByUUID)
+	//rout.GET("/list/get/all", h.listService.GetListByUUID)
 	panic("implement me")
 }
