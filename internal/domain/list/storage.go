@@ -1,9 +1,11 @@
 package list
 
+import "github.com/gin-gonic/gin"
+
 type Storage interface {
-	GetListByUUID(uuid string) *List
-	GetLimOffList(limit, offset int) []*List
-	CreateList(list *CreateList) *List
-	UpdateList(uuid string) *List
+	GetListByUUIDStorage(uuid string) *Task
+	GetLimOffList(limit, offset int) []*Task
+	CreateList(ctx *gin.Context, list *Task) *Task
+	UpdateList(uuid string) *Task
 	DeleteList(uuid string) error
 }
