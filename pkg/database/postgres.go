@@ -10,16 +10,7 @@ import (
 	"os"
 )
 
-/*type Database interface {
-	Connection(config *config.Postgres) (*gorm.DB, error)
-	Close() error
-}
-
-type Postgres struct {
-	DB *gorm.DB
-}*/
-
-func /*(db *Postgres)*/ Connection(config *config.Postgres) (*gorm.DB, error) {
+func Connection(config *config.Postgres) (*gorm.DB, error) {
 	err := godotenv.Load("../password.env")
 	if err != nil {
 		log.Fatalf("Some error occured. Err: %s", err)
@@ -36,22 +27,6 @@ func /*(db *Postgres)*/ Connection(config *config.Postgres) (*gorm.DB, error) {
 		log.Println("Error in DSN ==> ", err.Error())
 		return nil, err
 	}
-
-	/*if !conn.DisableAutomaticPing {
-		log.Printf("%s in Ping connect", err.Error())
-	}*/
-
-	//db.DB = conn
 	log.Println("Connected to Postgres!")
 	return conn, nil
 }
-
-/*func (d *Postgres) Close() error {
-	db, err := d.DB.DB()
-	if err != nil {
-		return err
-	}
-	log.Println("Postgres is disconnected!")
-	return db.Close()
-}
-*/
