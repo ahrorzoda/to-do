@@ -1,4 +1,4 @@
-package list
+package List
 
 import (
 	"github.com/ahrorzoda/to-do/internal/adapters/api"
@@ -6,14 +6,14 @@ import (
 )
 
 type handler struct {
-	listService Service
+	ListService Service
 }
 
 func NewHandler(service Service) api.Handler {
-	return &handler{listService: service}
+	return &handler{ListService: service}
 }
 
 func (h *handler) Register(rout *gin.Engine) {
-	//rout.GET("/list/get/all", h.listService.GetListByUUID)
-	panic("implement me")
+	//NOTE: calling all routes
+	rout.POST("/todo", h.ListService.CreateList)
 }
