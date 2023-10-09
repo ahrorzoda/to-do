@@ -10,26 +10,33 @@ import (
 
 func main() {
 	// entry point and implementation for all composites
-	log.Println("hello")
-
 	logger.Info.Println("config initializing")
-	cfg := config.InitJsonConfigs().Postgres
+	setConfig := config.InitJsonConfigs().Postgres
+	postgresConfig, err := composites.NewConfigComposite(setConfig)
+	if err != nil {
+		logger.Error.Println("config composite failed")
+		return
+	}
 
 	logger.Info.Printf("postgres composite initializing")
-	postgresDBC, err := composites.NewPostgresDBComposite(&cfg)
+	postgresDBC, err := composites.NewPostgresDBComposite(postgresConfig)
 	if err != nil {
 		logger.Error.Println("postgres composite failed")
 		return
 	}
 
-	logger.Info.Printf("list composite initializing")
-	listComposite, err := composites.NewListComposite(postgresDBC)
+	logger.Info.Printf("List composite initializing")
+	ListComposite, err := composites.NewListComposite(postgresDBC)
 	if err != nil {
-		logger.Error.Println("list composite failed")
+		logger.Error.Println("List composite failed")
 		return
 	}
 
 	logger.Info.Println("router initializing")
 	router := gin.Default()
-	listComposite.Handler.Register(router)
+	ListComposite.Handler.Register(router)
+	if err := router.Run(":8081"); err != nil {
+		log.Println("Error in run project ==> ", err.Error())
+		return
+	}
 }
