@@ -31,6 +31,5 @@ func main() {
 
 	logger.Info.Println("router initializing")
 	router := gin.Default()
-
 	listComposite.Handler.Register(router)
 }
