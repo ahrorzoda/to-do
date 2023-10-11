@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"github.com/ahrorzoda/to-do/internal/domain/list"
 	"github.com/ahrorzoda/to-do/pkg/config"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
@@ -24,8 +25,10 @@ func Connection(config *config.Postgres) (*gorm.DB, error) {
 	log.Println("dsn ==> ", connectionString)
 	conn, err := gorm.Open(postgres.Open(connectionString), &gorm.Config{})
 	if err != nil {
-		log.Println("Error in DSN ==> ", err.Error())
-		return nil, err
+		panic("Failed to connect to database")
+	}
+	if err := conn.AutoMigrate(&list.List{}); err != nil {
+		log.Fatalf("Ошибка при миграции базы данных: %v", err)
 	}
 	log.Println("Connected to Postgres!")
 	return conn, nil

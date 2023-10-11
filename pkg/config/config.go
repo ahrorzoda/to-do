@@ -22,14 +22,14 @@ type Postgres struct {
 	Token   string `json:"token"`
 }
 
-type App struct {
-	PortRun int    `json:"portRun"`
-	Token   string `json:"token"`
+type Todo struct {
+	Host string `json:"host"`
+	Port string `json:"port"`
 }
 
 type SettingConfig struct {
 	Postgres Postgres `json:"postgres"`
-	App      App      `json:"app"`
+	Todo     Todo     `json:"todo"`
 }
 
 func loadJsonVariables() (config *SettingConfig) {

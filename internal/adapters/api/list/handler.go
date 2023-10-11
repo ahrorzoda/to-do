@@ -16,4 +16,5 @@ func NewHandler(service Service) api.Handler {
 func (h *handler) Register(rout *gin.Engine) {
 	//NOTE: calling all routes
 	rout.POST("/todo", h.ListService.CreateList)
+	rout.GET("/lists", h.ListService.GetLists)
 }

@@ -1,5 +1,0 @@
-ERROR: 2023/10/09 16:24:38 storage.go:31: CreateList(): Error in create List ==> %s ERROR: column "create_at" of relation "tasks" does not exist (SQLSTATE 42703)
-ERROR: 2023/10/09 16:26:06 storage.go:31: CreateList(): Error in create List ==> %s ERROR: column "create_at" of relation "tasks" does not exist (SQLSTATE 42703)
-ERROR: 2023/10/09 16:30:46 storage.go:31: CreateList(): Error in create List ==> %s ERROR: column "created_at default: true" of relation "tasks" does not exist (SQLSTATE 42703)
-ERROR: 2023/10/09 16:31:01 storage.go:31: CreateList(): Error in create List ==> %s ERROR: column "created_at default true" of relation "tasks" does not exist (SQLSTATE 42703)
-ERROR: 2023/10/09 16:31:19 storage.go:31: CreateList(): Error in create List ==> %s ERROR: column "created_at, default true" of relation "tasks" does not exist (SQLSTATE 42703)

@@ -20,8 +20,13 @@ func (ls *ListStorage) GetListByUUIDStorage(uuid string) *list.Task {
 	return nil
 }
 
-func (ls *ListStorage) GetLimOffList(limit, offset int) []*list.Task {
-	return nil
+func (ls *ListStorage) GetLists(ctx *gin.Context) []*list.Task {
+	var tasks []*list.Task
+	if err := ls.db.Find(&tasks).Error; err != nil {
+		logger.Error.Println("Error in `select *from tasks`", err.Error())
+		return nil
+	}
+	return tasks
 }
 
 //NOTE: добавление новых задач

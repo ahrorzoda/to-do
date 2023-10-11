@@ -6,7 +6,7 @@ import (
 
 type Service interface {
 	GetListByUUID(ctx *gin.Context)
-	GetLimOffList(ctx *gin.Context)
+	GetLists(ctx *gin.Context)
 	CreateList(ctx *gin.Context)
 	UpdateList(ctx *gin.Context)
 	DeleteList(ctx *gin.Context)
