@@ -8,7 +8,7 @@ import (
 
 type Service interface {
 	GetListByUUID(ctx *gin.Context)
-	GetLimOffList(ctx *gin.Context)
+	GetLists(ctx *gin.Context)
 	CreateList(ctx *gin.Context)
 	UpdateList(ctx *gin.Context)
 	DeleteList(ctx *gin.Context)
@@ -27,14 +27,16 @@ func (s *service) GetListByUUID(ctx *gin.Context) {
 	return
 }
 
-func (s *service) GetLimOffList(ctx *gin.Context) {
-	//s.storage.GetLimOffList(limit, offset)
-	return
+func (s *service) GetLists(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, gin.H{
+		"lists": s.storage.GetLists(ctx),
+	})
 }
 
 func (s *service) CreateList(ctx *gin.Context) {
 	var lst Task
 	if err := ctx.ShouldBind(&lst); err != nil {
+		logger.Error.Printf("%d")
 		logger.Error.Println("CreateList(): Error in Bind json ==> %s", err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
