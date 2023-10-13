@@ -1,25 +1,53 @@
 package main
 
 import (
-	"fmt"
-	"os"
-	"os/signal"
-	"syscall"
+	"github.com/ahrorzoda/to-do/pkg/config"
+	"github.com/ahrorzoda/to-do/pkg/database"
+	"github.com/gin-gonic/gin"
+	"log"
 )
 
+type Classroom struct {
+	ID       uint   `gorm:"primary_key" json:"id"`
+	Number   string `gorm:"varchar" json:"number"`
+	Busy     bool   `gorm:"type:boolean" json:"busy"`
+	UniverID uint   // Внешний ключ для связи с Univer
+}
+
+type Univer struct {
+	ID      uint        `gorm:"primary_key" json:"id"`
+	Address string      `gorm:"varchar" json:"address"`
+	Class   []Classroom `gorm:"foreignKey:UniverID" json:"class"`
+}
+
+func Add(c *gin.Context) {
+	var un Univer
+
+	if err := c.BindJSON(&un); err != nil {
+		log.Println(err.Error())
+		return
+	}
+	log.Println("univer ==> ", un)
+	db, err := database.Connection(&config.InitJsonConfigs().Postgres)
+	if err != nil {
+		log.Println("Error in database connection ==> ", err.Error())
+		return
+	}
+
+	if err := db.Create(&un).Error; err != nil {
+		log.Println("Error in create ==> ", err.Error())
+		return
+	}
+	c.JSON(200, gin.H{
+		"result": un,
+	})
+}
+
 func main() {
-	// Создаем канал для приема сигналов
-	sigs := make(chan os.Signal, 1)
-
-	// Передаем сигналы интересующего нас типа (syscall.SIGINT) в канал
-	signal.Notify(sigs, syscall.SIGINT)
-
-	// Ожидаем сигнал
-	fmt.Println("Ожидание сигнала Ctrl+C (SIGINT). Нажмите Ctrl+C для завершения...")
-
-	// Блокируем выполнение программы до получения сигнала
-	<-sigs
-
-	// Здесь можно добавить ваш код обработки сигнала Ctrl+C
-	fmt.Println("Получен сигнал Ctrl+C. Завершение программы.")
+	rout := gin.Default()
+	rout.POST("/add", Add)
+	if err := rout.Run(); err != nil {
+		log.Println("Error in run project ==> ", err.Error())
+		return
+	}
 }
