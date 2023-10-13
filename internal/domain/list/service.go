@@ -36,7 +36,6 @@ func (s *service) GetLists(ctx *gin.Context) {
 func (s *service) CreateList(ctx *gin.Context) {
 	var lst Task
 	if err := ctx.ShouldBind(&lst); err != nil {
-		logger.Error.Printf("%d")
 		logger.Error.Println("CreateList(): Error in Bind json ==> %s", err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
